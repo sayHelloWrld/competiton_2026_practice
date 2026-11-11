@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use League\Flysystem\StorageAttributes;
-use Pest\Plugins\Tia\Storage as TiaStorage;
 
 class ProductController extends Controller
 {
@@ -75,7 +73,7 @@ class ProductController extends Controller
             $products = $products->orderBy($validated['order-by'], $validated['order-by-direction'] ?? 'desc');
         }
 
-        $products = $products->get();
+        $products = $products->paginate(4)->withQueryString();
 
         return view('products.index', compact('products'));
     }
