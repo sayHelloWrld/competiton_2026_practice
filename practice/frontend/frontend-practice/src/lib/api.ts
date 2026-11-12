@@ -29,12 +29,18 @@ export function getPosts(): Promise<Post[]> {
     return request(`/posts`, 'GET');
 }
 
-export function createPost(title: string, body: string): Post {
-    
+export function createPost(title: string, body: string): Promise<Post> {
+    return request('/posts', 'POST', {
+        "title": title,
+        "body": body
+    });
 }
 
-export function updatePost(id: number, title: string, body: string): Post {
-
+export function updatePost(id: string, title: string, body: string): Promise<Post> {
+    return request(`/posts/${id}`, 'PUT', {
+        "title": title,
+        "body": body
+    });
 }
 
 export function deletePost(id: number) {
