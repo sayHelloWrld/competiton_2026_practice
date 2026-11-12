@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import { injectPosts } from '@/composables/posts';
+import { ref, type Ref } from 'vue';
 
 const posts = injectPosts();
+
+const dialogRef: Ref<HTMLDialogElement | null> = ref(null);
+
+const close = () => {
+    dialogRef.value?.showModal();
+    dialogRef.value?.close();
+}
+
 </script>
 
 <template>
@@ -26,21 +35,21 @@ const posts = injectPosts();
                     <button type="button" class="btn-solid theme-primary" data-bs-toggle="dialog" data-bs-target="#exampleDialog">
                         Open dialog
                     </button>
-                    <dialog class="dialog" id="exampleDialog">
-                        <div class="dialog-header">
-                            <h1 class="dialog-title">Dialog title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="dialog" aria-label="Close"></button>
-                        </div>
-                        <div class="dialog-body">
-                            <p>This is a native dialog element. It uses the browser’s built-in modal behavior for accessibility and focus management.</p>
-                        </div>
-                        <div class="dialog-footer">
-                            <button type="button" class="btn-solid theme-secondary" data-bs-dismiss="dialog">Close</button>
-                            <button type="button" class="btn-solid theme-primary" data-bs-dismiss="dialog" @click="() => console.log('test')" :id="index.toString()">Save changes</button>
-                        </div>
-                    </dialog>
                 </td>
             </tr>
         </tbody>
     </table>
+    <dialog ref="dialogRef" class="dialog" id="exampleDialog">
+        <div class="dialog-header">
+            <h1 class="dialog-title">Dialog title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="dialog" aria-label="Close"></button>
+        </div>
+        <div class="dialog-body">
+            <p>This is a native dialog element. It uses the browser’s built-in modal behavior for accessibility and focus management.</p>
+        </div>
+        <div class="dialog-footer">
+            <button type="button" class="btn-solid theme-secondary" data-bs-dismiss="dialog">Close</button>
+            <button type="button" class="btn-solid theme-primary" @click="() => close()">Save changes</button>
+        </div>
+    </dialog>
 </template>
